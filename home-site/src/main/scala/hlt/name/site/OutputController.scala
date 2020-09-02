@@ -3,7 +3,7 @@ package hlt.name.site
 import java.time.LocalDateTime
 import java.util.Optional
 
-import hlt.name.site.dal.{DALMaxOutput, OutputAggregateRepository, OutputRepository}
+import hlt.name.site.dal.{DALMaxOutput, DoubleSettingRepository, OutputAggregateRepository, OutputRepository}
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.domain.{PageRequest, Sort}
 import org.springframework.stereotype.Controller
@@ -22,6 +22,9 @@ class OutputController {
 
   @Autowired
   private var outputAggregateRepository: OutputAggregateRepository = _
+
+  @Autowired
+  private var doubleSettingsRepository: DoubleSettingRepository = _
 
   @GetMapping(value = Array("/addForm"))
   def addForm(): String = "outputs/addForm"
@@ -44,13 +47,15 @@ class OutputController {
   def add(@RequestParam(required = false) hardOutput: Boolean,
           @RequestParam(required = false) softOutput: Boolean,
           @RequestParam(required = false) comment: String,
-          @RequestParam(required = false) weight: Double): String = {
+          @RequestParam(required = false) totalWeight: Double): String = {
+    val pampersWeight = doubleSettingsRepository.getPampersWeight
     val item = new DALMaxOutput
     item.outputTime = LocalDateTime.now()
     item.softOutput = softOutput
     item.hardOutput = hardOutput
     item.comment = if (comment == null) "" else comment
-    item.weight = weight
+    item.weight = totalWeight - pampersWeight
+    item.pampersWeight = pampersWeight
     outputRepository.save(item)
     "redirect:/outputs/list"
   }
@@ -60,7 +65,8 @@ class OutputController {
              @RequestParam(required = false) hardOutput: Boolean,
              @RequestParam(required = false) softOutput: Boolean,
              @RequestParam(required = false) comment: String,
-             @RequestParam(required = false) weight: Double): String = {
+             @RequestParam(required = false) weight: Double,
+             @RequestParam(required = false) pampersWeight: Double): String = {
     val t = outputRepository.findById(id)
     if (!t.isPresent) {
       throw new ResourceNotFoundException(s"output with id $id not found")
@@ -70,6 +76,7 @@ class OutputController {
     item.hardOutput = hardOutput
     item.comment = if (comment == null) "" else comment
     item.weight = weight
+    item.pampersWeight = pampersWeight
     outputRepository.save(item)
     "redirect:/outputs/list"
   }

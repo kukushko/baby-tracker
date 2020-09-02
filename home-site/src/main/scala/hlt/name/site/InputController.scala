@@ -81,10 +81,10 @@ class InputController {
       case None =>
         throw new Exception("cannot stop - feeding not started")
       case Some(x) =>
-        if (x.endTime != null)
-          throw new Exception("cannot stop - feeding already completed")
-        x.endTime = LocalDateTime.now()
-        inputRepository.save(x)
+        if (x.endTime == null) {
+          x.endTime = LocalDateTime.now()
+          inputRepository.save(x)
+        }
     }
     "redirect:/inputs/list"
   }

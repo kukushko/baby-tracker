@@ -30,6 +30,10 @@ class DALMaxOutput {
   @BeanProperty
   var weight: Double = _
 
+  @Column(nullable = false)
+  @BeanProperty
+  var pampersWeight: Double = _
+
   @Column(nullable = true, length = 255)
   @BeanProperty
   var comment: String = _

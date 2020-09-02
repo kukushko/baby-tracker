@@ -36,9 +36,12 @@ class RootController {
     val recentItem = recentStats.find(t => t.outputDate == today)
     val todayInputs = inputRepository.findTodayItems(LocalDate.now())
     val hasVigantol = todayInputs.exists(_.vigantol)
+    val canStartFeeding = inputRepository.canStartFeeding
     result.addObject("todayOutput", recentItem.orNull)
     result.addObject("hasVigantol", hasVigantol)
     result.addObject("hasTemperature", recentTemp.isPresent)
+    result.addObject("canStartFeeding", canStartFeeding)
+    result.addObject("canStopFeeding", !canStartFeeding)
     val vigantolMessage = if (hasVigantol) {
       "YES"
     } else {

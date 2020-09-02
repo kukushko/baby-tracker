@@ -22,11 +22,7 @@ class InputController {
 
   @GetMapping(value = Array("/start"))
   def start(): String = {
-    val latest = inputRepository.findLatest
-    val canStart = latest match {
-      case None => true
-      case Some(x) => x.endTime != null
-    }
+    val canStart = inputRepository.canStartFeeding
     if (!canStart) {
       throw new Exception("cannot start new feeding, current is still in progress")
     }

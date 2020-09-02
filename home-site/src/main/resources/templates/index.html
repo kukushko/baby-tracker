@@ -1,11 +1,16 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="root :: stdheader('Home', ~{})"></head>
-<body th:replace="root :: stdbody('Home', ~{::div}, ~{})">
+<body th:replace="root :: stdbody('Home', ~{::div}, ~{::script})">
 
 
 <div>
+    <div>
+        <button th:if="${canStartFeeding}" type="button" class="btn" onclick="startFeeding()">Start Feeding</button>
+        <button th:if="${canStopFeeding}" type="button" class="btn" onclick="stopFeeding()">Stop Feeding</button>
+    </div>
     <p>
+        <br>
         Today's total output:
         <span th:if="${todayOutput != null}" th:text="${todayOutput.totalWeight}"></span>
         <span th:if="${todayOutput == null}">No outputs yet :'(</span>
@@ -19,5 +24,14 @@
         <span class="temp-fail" th:if="${!hasTemperature}" th:text="${temperatureMessage}"></span>
     </p>
 </div>
+
+<script language="JavaScript">
+    function startFeeding() {
+        location.replace("/inputs/start");
+    }
+    function stopFeeding() {
+        location.replace("/inputs/stop");
+    }
+</script>
 </body>
 </html>

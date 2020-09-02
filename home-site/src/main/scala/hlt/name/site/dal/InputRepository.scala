@@ -26,4 +26,12 @@ trait InputRepository extends CrudRepository[DALInput, Integer] {
     else
       Some(items.get(0))
   }
+
+  def canStartFeeding: Boolean = {
+    val latest = findLatest
+    latest match {
+      case None => true
+      case Some(x) => x.endTime != null
+    }
+  }
 }

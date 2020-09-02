@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="root :: stdheader('Edit Temperature', ~{})"></head>
+<body th:replace="root :: stdbody('Edit Temperature', ~{::div}, ~{::script})">
+<div class="row">
+
+    <div class="col-md-3">
+        <p>Edit temperature for <span th:text="${#temporals.format(item.temperatureTime, 'dd-MMM-yyyy HH:mm')}"></p>
+        <form id="editTempForm" cssClass="form-inline" th:action="@{/temp/update}" method="post">
+            <input id="id" name="id" type="hidden" th:value="${item.id}">
+            <div class="form-group">
+                <input id="temperatureTime" name="temperatureTime" class="form-control" type="text" placeholder="Minutes" th:value="${#temporals.format(item.temperatureTime, 'yyyy-MM-dd HH:mm')}">
+            </div>
+            <div class="form-group">
+                <input id="temperature" name="temperature" class="form-control" type="text" placeholder="Temperature" th:value="${item.temperature}">
+            </div>
+            <div class="form-group">
+                <input id="comment" name="comment" class="form-control" type="text" placeholder="Comment" th:value="${item.comment}">
+            </div>
+            <button type="submit" class="btn btn-default">Save</button>
+            <button type="button" class="btn" th:onclick="${'deleteRow(' + item.id + ')'}">Delete</button>
+            <button type="button" class="btn" onclick="window.history.back()">Cancel</button>
+        </form>
+
+    </div>
+
+
+</div>
+
+<script language="JavaScript">
+    function deleteRow(id) {
+        if (confirm("Do you wish to delete this entry?")) {
+            var params = {
+                id: id
+            };
+            $.post("/temp/delete", params, function() {
+                location.replace("/temp/list");
+            }).fail(function (data, status, xhr) {
+                alert("Failed to delete record");
+            });
+        }
+    }
+</script>
+
+</body>
+</html>

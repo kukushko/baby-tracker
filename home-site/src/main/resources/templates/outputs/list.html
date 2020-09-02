@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="root :: stdheader('Outputs', ~{})"></head>
+<body th:replace="root :: stdbody('Outputs', ~{::div}, ~{})">
+<div>
+
+    <p>
+        <a th:href="@{/outputs/addForm}">New</a>
+        <a th:href="@{/outputs/dailyStats}">Report</a>
+    </p>
+    <table class="table">
+        <tr>
+            <th>Timestamp</th>
+            <th>Hard</th>
+            <th>Soft</th>
+            <th>Weight</th>
+            <th>Comment</th>
+        </tr>
+
+        <tr class="data-table-row" th:each="item : ${outputs}">
+            <td>
+                <a th:href="@{/outputs/editForm/{id}(id=${item.id})}" th:text="${#temporals.format(item.outputTime, 'dd-MMM-yyyy HH:mm')}"></a>
+            </td>
+            <td><span th:if="${item.hardOutput}" class="glyphicon glyphicon-ok"></td>
+            <td><span th:if="${item.softOutput}" class="glyphicon glyphicon-ok"></td>
+            <td th:text="${item.weight}"></td>
+            <td th:text="${item.comment}"></td>
+        </tr>
+
+    </table>
+
+    <a th:if="${hasLessPages}" th:href="@{/outputs/list?page={page}(page=${prevPage})}">Prev</a>
+    <a th:if="${hasMorePages}" th:href="@{/outputs/list?page={page}(page=${nextPage})}">Next</a>
+
+</div>
+
+
+</body>
+</html>

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="root :: stdheader('Daily Stats', ~{})"></head>
+<body th:replace="root :: stdbody('Daily Stats', ~{::div}, ~{})">
+<div>
+
+    <table class="table">
+        <tr>
+            <th>Date</th>
+            <th>Total Output</th>
+        </tr>
+
+        <tr class="data-table-row" th:each="item : ${outputs}">
+            <td th:text="${#temporals.format(item.outputDate, 'dd-MMM-yyyy')}"></td>
+            <td th:text="${item.totalWeight}"></td>
+        </tr>
+
+    </table>
+
+</div>
+
+
+</body>
+</html>

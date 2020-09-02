@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="root :: stdheader('Add Output', ~{})"></head>
+<body th:replace="root :: stdbody('Add Output', ~{::div}, ~{})">
+<div class="row">
+
+    <div class="col-md-3">
+        <form id="addOutputForm" cssClass="form-inline" th:action="@{/outputs/add}" method="post">
+            <div class="form-check">
+                <input id="hardOutput" name="hardOutput" type="checkbox" class="form-check-input">
+                <label for="hardOutput" class="form-check-label">Hard Output</label>
+            </div>
+            <div class="form-check">
+                <input id="softOutput" name="softOutput" type="checkbox" class="form-check-input">
+                <label for="softOutput">Soft Output</label>
+            </div>
+            <div class="form-group">
+                <input id="comment" name="comment" class="form-control" type="text" placeholder="Comment">
+            </div>
+            <div class="form-group">
+                <input id="weight" name="weight" class="form-control" type="text" placeholder="Weight">
+            </div>
+            <button type="submit" class="btn btn-default">Add</button>
+            <button type="button" class="btn" onclick="window.history.back()">Cancel</button>
+        </form>
+    </div>
+
+
+</div>
+</body>
+</html>

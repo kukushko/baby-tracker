@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="root :: stdheader('Home', ~{})"></head>
+<body th:replace="root :: stdbody('Home', ~{::div}, ~{})">
+
+
+<div>
+    <p>
+        Today's total output:
+        <span th:if="${todayOutput != null}" th:text="${todayOutput.totalWeight}"></span>
+        <span th:if="${todayOutput == null}">No outputs yet :'(</span>
+        <br>
+        Vigantol today:
+        <span class="vigantol-ok" th:if="${hasVigantol}" th:text="${vigantolMessage}"></span>
+        <span class="vigantol-fail" th:if="${!hasVigantol}" th:text="${vigantolMessage}"></span>
+        <br>
+        Temperature today:
+        <span class="temp-ok" th:if="${hasTemperature}" th:text="${temperatureMessage}"></span>
+        <span class="temp-fail" th:if="${!hasTemperature}" th:text="${temperatureMessage}"></span>
+    </p>
+</div>
+</body>
+</html>

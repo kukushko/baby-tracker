@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="stdheader(title, links)">
+    <title th:text="${title}">Default Title</title>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}" rel="stylesheet"/>
+    <link th:href="@{/static/site.css}" rel="stylesheet"/>
+    <th:block th:replace="${links}" />
+</head>
+<body th:fragment="stdbody(activeTab, content, scripts)">
+
+
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <!--<div class="navbar-header">-->
+            <!--<span class="navbar-brand" href="#">Max Maintenance</span>-->
+        <!--</div>-->
+        <ul class="nav navbar-nav">
+            <li>
+                <a th:href="@{/}">
+                    Max Maintenance
+                </a>
+            </li>
+        </ul>
+
+        <ul class="nav navbar-nav">
+            <li>
+                <a th:href="@{/inputs/list}">
+                    Inputs
+                </a>
+            </li>
+            <li>
+                <a th:href="@{/outputs/list}">
+                    Outputs
+                </a>
+            </li>
+            <li>
+                <a th:href="@{/temp/list}">
+                    Temperature
+                </a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<div class="container-fluid">
+    <div th:replace="${content}"></div>
+</div>
+
+<script th:src="@{/webjars/jquery/3.3.1/jquery.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/3.3.7/js/bootstrap.min.js}"></script>
+<script th:replace="${scripts}"></script>
+
+
+</body>
+</html>

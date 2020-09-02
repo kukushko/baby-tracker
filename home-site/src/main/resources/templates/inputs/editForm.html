@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="root :: stdheader('Edit Input', ~{})"></head>
+<body th:replace="root :: stdbody('Edit Input', ~{::div}, ~{::script})">
+<div class="row">
+
+    <div class="col-md-3">
+        <p>Edit input for <span th:text="${#temporals.format(item.startTime, 'dd-MMM-yyyy HH:mm')}"></p>
+        <form id="editInputForm" cssClass="form-inline" th:action="@{/inputs/update}" method="post">
+            <input id="id" name="id" type="hidden" th:value="${item.id}">
+            <div class="form-group">
+                <input id="startTime" name="startTime" class="form-control" type="text" placeholder="Minutes" th:value="${#temporals.format(item.startTime, 'yyyy-MM-dd HH:mm')}">
+            </div>
+            <div class="form-check">
+                <input id="vigantol" name="vigantol" type="checkbox" class="form-check-input" th:field="*{item.vigantol}">
+                <label for="vigantol" class="form-check-label">Vigantol</label>
+            </div>
+            <div class="form-group">
+                <input id="minutes" name="minutes" class="form-control" type="text" placeholder="Minutes" th:value="${item.minutes}">
+            </div>
+            <div class="form-group">
+                <input id="comment" name="comment" class="form-control" type="text" placeholder="Comment" th:value="${item.comment}">
+            </div>
+            <button type="submit" class="btn btn-default">Save</button>
+            <button type="button" class="btn" th:onclick="${'deleteRow(' + item.id + ')'}">Delete</button>
+            <button type="button" class="btn" onclick="window.history.back()">Cancel</button>
+        </form>
+
+    </div>
+
+
+</div>
+
+<script language="JavaScript">
+    function deleteRow(id) {
+        if (confirm("Do you wish to delete this entry?")) {
+            var params = {
+                id: id
+            };
+            $.post("/inputs/delete", params, function() {
+                location.replace("/inputs/list");
+            }).fail(function (data, status, xhr) {
+                alert("Failed to delete record");
+            });
+        }
+    }
+</script>
+
+</body>
+</html>

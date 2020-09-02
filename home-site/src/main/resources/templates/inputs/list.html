@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="root :: stdheader('Inputs', ~{})"></head>
+<body th:replace="root :: stdbody('Inputs', ~{::div}, ~{})">
+<div>
+
+    <p>
+        <a th:if="${canStart}" th:href="@{/inputs/start}">Start</a>
+        <a th:if="${canStop}" th:href="@{/inputs/stop}">Stop</a>
+    </p>
+    <table class="table">
+        <tr>
+            <th>Start Time</th>
+            <th>Minutes</th>
+            <th>Vigantol</th>
+            <th>Comment</th>
+        </tr>
+
+        <tr class="data-table-row" th:each="item : ${inputs}">
+            <td th:if="${item.endTime != null}">
+                <a th:href="@{/inputs/editForm/{id}(id=${item.id})}" th:text="${#temporals.format(item.startTime, 'dd-MMM-yyyy HH:mm')}"></a>
+            </td>
+            <td th:if="${item.endTime == null}" th:text="${#temporals.format(item.startTime, 'dd-MMM-yyyy HH:mm') + ' (Active)'}">
+
+            </td>
+
+            <td th:text="${item.minutes}"></td>
+            <td><span th:if="${item.vigantol}" class="glyphicon glyphicon-ok"></td>
+            <td th:text="${item.comment}"></td>
+        </tr>
+
+    </table>
+
+    <a th:if="${hasLessPages}" th:href="@{/inputs/list?page={page}(page=${prevPage})}">Prev</a>
+    <a th:if="${hasMorePages}" th:href="@{/inputs/list?page={page}(page=${nextPage})}">Next</a>
+
+</div>
+
+
+</body>
+</html>

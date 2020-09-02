@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="root :: stdheader('Add Output', ~{})"></head>
+<body th:replace="root :: stdbody('Add Output', ~{::div}, ~{})">
+<div class="row">
+
+    <div class="col-md-3">
+        <form id="addTempForm" cssClass="form-inline" th:action="@{/temp/add}" method="post">
+            <div class="form-group">
+                <input id="temperature" name="temperature" class="form-control" type="text" value="36.6" placeholder="Temperature">
+            </div>
+
+            <div class="form-group">
+                <input id="comment" name="comment" class="form-control" type="text" placeholder="Comment">
+            </div>
+
+            <button type="submit" class="btn btn-default">Add</button>
+            <button type="button" class="btn" onclick="window.history.back()">Cancel</button>
+        </form>
+    </div>
+
+
+</div>
+</body>
+</html>

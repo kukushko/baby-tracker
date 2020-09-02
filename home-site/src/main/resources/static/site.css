@@ -1,0 +1,27 @@
+.data-table-row {
+
+}
+
+.delete-link {
+    display: none;
+}
+
+.data-table-row:hover .delete-link {
+    display: inline;
+}
+
+.vigantol-ok {
+    color: green;
+}
+
+.vigantol-fail {
+    color: red;
+}
+
+.temp-ok {
+    color: green;
+}
+
+.temp-fail {
+    color: red;
+}

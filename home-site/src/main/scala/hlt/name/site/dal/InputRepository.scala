@@ -13,7 +13,7 @@ trait InputRepository extends CrudRepository[DALInput, Integer] {
   @Query(nativeQuery = true, value = "select * from dalinput where date(start_time)=:d")
   def findTodayItems(@Param(value = "d") date: LocalDate): java.util.List[DALInput]
 
-  @Query(nativeQuery = true, value = "select * from dalinput where vigantol=1 limit 1")
+  @Query(nativeQuery = true, value = "select * from dalinput where vigantol=1 order by start_time desc limit 1")
   def findLastVigantol(): Optional[DALInput]
 
   def findByOrderByStartTimeDesc(page: Pageable): java.util.List[DALInput]

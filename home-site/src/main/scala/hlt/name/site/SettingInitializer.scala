@@ -28,7 +28,8 @@ class SettingInitializer {
 
   @PostConstruct
   def ensureSettingsConfigured(): Unit = {
-    ensureSettingExist(DoubleSettingRepository.PAMPERS_WEIGHT_SETTING, DoubleSettingRepository.DEFAULT_PARMERS_WEIGHT)
+    ensureSettingExist(DoubleSettingRepository.PAMPERS_WEIGHT_SETTING, DoubleSettingRepository.DEFAULT_PAMPERS_WEIGHT)
+    ensureSettingExist(DoubleSettingRepository.PAMPERS_COUNTER_SETTING, DoubleSettingRepository.DEFAULT_PAMPERS_COUNT)
   }
 
 }

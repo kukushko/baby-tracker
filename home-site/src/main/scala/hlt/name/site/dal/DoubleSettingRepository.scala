@@ -17,10 +17,30 @@ trait DoubleSettingRepository extends CrudRepository[DALDoubleSetting, Integer] 
 
   def getPampersWeight: Double = getSetting(
     DoubleSettingRepository.PAMPERS_WEIGHT_SETTING,
-    DoubleSettingRepository.DEFAULT_PARMERS_WEIGHT)
+    DoubleSettingRepository.DEFAULT_PAMPERS_WEIGHT)
+
+  def getPampersCount: Double = getSetting(
+    DoubleSettingRepository.PAMPERS_COUNTER_SETTING,
+    DoubleSettingRepository.DEFAULT_PAMPERS_COUNT)
+
+  def decrementPampersCount(): Unit = {
+    val items = findByName(DoubleSettingRepository.PAMPERS_COUNTER_SETTING)
+    val item = if (items.size() > 0) {
+      items.get(0)
+    } else {
+      val x = new DALDoubleSetting
+      x.name = DoubleSettingRepository.PAMPERS_COUNTER_SETTING
+      x.value = 0
+      x
+    }
+    item.value -= 1
+    save(item)
+  }
 }
 
 object DoubleSettingRepository {
   val PAMPERS_WEIGHT_SETTING : String = "Pampers Weight"
-  val DEFAULT_PARMERS_WEIGHT : Double = 16
+  val PAMPERS_COUNTER_SETTING : String = "Pampers Count"
+  val DEFAULT_PAMPERS_WEIGHT : Double = 16
+  val DEFAULT_PAMPERS_COUNT : Double = 0
 }

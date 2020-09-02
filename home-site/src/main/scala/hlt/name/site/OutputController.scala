@@ -57,6 +57,7 @@ class OutputController {
     item.weight = totalWeight - pampersWeight
     item.pampersWeight = pampersWeight
     outputRepository.save(item)
+    doubleSettingsRepository.decrementPampersCount()
     "redirect:/outputs/list"
   }
 

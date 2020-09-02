@@ -23,6 +23,7 @@
         <span class="temp-ok" th:if="${hasTemperature}" th:text="${temperatureMessage}"></span>
         <span class="temp-fail" th:if="${!hasTemperature}" th:text="${temperatureMessage}"></span>
     </p>
+    <p th:if="${lowPampers}" class="low-pampers">Low pampers amount!</p>
 </div>
 
 <script language="JavaScript">

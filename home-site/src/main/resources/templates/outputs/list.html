@@ -14,6 +14,7 @@
             <th>Hard</th>
             <th>Soft</th>
             <th>Weight</th>
+            <th>Pampers Weight</th>
             <th>Comment</th>
         </tr>
 
@@ -24,6 +25,7 @@
             <td><span th:if="${item.hardOutput}" class="glyphicon glyphicon-ok"></td>
             <td><span th:if="${item.softOutput}" class="glyphicon glyphicon-ok"></td>
             <td th:text="${item.weight}"></td>
+            <td th:text="${item.pampersWeight}"></td>
             <td th:text="${item.comment}"></td>
         </tr>
 

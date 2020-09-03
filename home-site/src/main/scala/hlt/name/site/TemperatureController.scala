@@ -6,6 +6,7 @@ import java.time.format.DateTimeFormatter
 import hlt.name.site.dal.{DALTemperature, TemperatureRepository}
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.domain.PageRequest
+import org.springframework.format.annotation.DateTimeFormat
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation._
 import org.springframework.web.servlet.ModelAndView
@@ -46,7 +47,9 @@ class TemperatureController {
 
   @PostMapping(value = Array("/update"))
   def update(@RequestParam id: Int,
-             @RequestParam(required = false) temperatureTime: String,
+             @RequestParam(required = false)
+             @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
+             temperatureTime: LocalDateTime,
              @RequestParam temperature: Double,
              @RequestParam(required = false) comment: String): String = {
     val t = temperatureRepository.findById(id)
@@ -55,8 +58,7 @@ class TemperatureController {
     }
     val item = t.get()
     if (temperatureTime != null) {
-      val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")
-      item.temperatureTime = LocalDateTime.parse(temperatureTime, formatter)
+      item.temperatureTime = temperatureTime
     }
     item.temperature = temperature
     item.comment = comment

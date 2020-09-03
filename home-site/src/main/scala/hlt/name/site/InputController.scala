@@ -7,6 +7,7 @@ import hlt.name.site.dal.{DALInput, InputRepository}
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters.LocalDateTimeConverter
+import org.springframework.format.annotation.DateTimeFormat
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation._
 import org.springframework.web.servlet.ModelAndView
@@ -50,7 +51,9 @@ class InputController {
 
   @PostMapping(value = Array("/update"))
   def update(@RequestParam id: Int,
-             @RequestParam(required = false) startTime: String,
+             @RequestParam(required = false)
+             @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
+             startTime: LocalDateTime,
              @RequestParam(required = false) comment: String,
              @RequestParam(required = false) vigantol: Boolean,
              @RequestParam(required = false) minutes: Int): String = {
@@ -59,8 +62,7 @@ class InputController {
       throw new ResourceNotFoundException(s"input with id $id not found")
     val x = item.get()
     if (startTime != null) {
-      val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")
-      x.startTime = LocalDateTime.parse(startTime, formatter)
+      x.startTime = startTime
     }
     x.endTime = x.startTime.plusMinutes(minutes)
     x.comment = comment

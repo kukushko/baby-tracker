@@ -9,10 +9,10 @@
         <form id="editTempForm" cssClass="form-inline" th:action="@{/temp/update}" method="post">
             <input id="id" name="id" type="hidden" th:value="${item.id}">
             <div class="form-group">
-                <input id="temperatureTime" name="temperatureTime" class="form-control" type="text" placeholder="Minutes" th:value="${#temporals.format(item.temperatureTime, 'yyyy-MM-dd HH:mm')}">
+                <input id="temperatureTime" name="temperatureTime" class="form-control" type="datetime-local" placeholder="Minutes" th:field="*{item.temperatureTime}">
             </div>
             <div class="form-group">
-                <input id="temperature" name="temperature" class="form-control" type="text" placeholder="Temperature" th:value="${item.temperature}">
+                <input id="temperature" name="temperature" class="form-control" type="number" step="0.1" placeholder="Temperature" th:value="${item.temperature}">
             </div>
             <div class="form-group">
                 <input id="comment" name="comment" class="form-control" type="text" placeholder="Comment" th:value="${item.comment}">

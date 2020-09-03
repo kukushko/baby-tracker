@@ -10,7 +10,7 @@
             <input id="id" name="id" type="hidden" th:value="${item.id}">
             <input id="settingType" name="settingType" type="hidden" value="double">
             <div class="form-group">
-                <input id="value" name="value" class="form-control" type="text" placeholder="Value" th:value="${item.value}">
+                <input id="value" name="value" class="form-control" type="number" placeholder="Value" th:value="${item.value}">
             </div>
             <button type="submit" class="btn btn-default">Save</button>
             <button type="button" class="btn" onclick="window.history.back()">Cancel</button>

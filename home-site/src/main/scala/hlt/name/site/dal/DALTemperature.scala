@@ -3,6 +3,7 @@ package hlt.name.site.dal
 import java.time.LocalDateTime
 
 import javax.persistence._
+import org.springframework.format.annotation.DateTimeFormat
 
 import scala.beans.BeanProperty
 
@@ -16,6 +17,7 @@ class DALTemperature {
 
   @Column(nullable = false)
   @BeanProperty
+  @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
   var temperatureTime: LocalDateTime = _
 
   @Column(nullable = false)

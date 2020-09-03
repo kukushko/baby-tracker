@@ -3,6 +3,7 @@ package hlt.name.site.dal
 import java.time.{Duration, LocalDateTime, Period}
 
 import javax.persistence._
+import org.springframework.format.annotation.DateTimeFormat
 
 import scala.beans.BeanProperty
 
@@ -15,6 +16,7 @@ class DALInput {
   var id: Int = _
 
   @Column(nullable = false)
+  @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
   @BeanProperty
   var startTime: LocalDateTime = _
 

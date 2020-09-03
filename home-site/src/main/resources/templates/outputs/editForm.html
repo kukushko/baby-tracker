@@ -17,10 +17,10 @@
                 <label for="softOutput">Soft Output</label>
             </div>
             <div class="form-group">
-                <input id="weight" name="weight" class="form-control" type="text" placeholder="Weight" th:value="${item.weight}">
+                <input id="weight" name="weight" class="form-control" type="number" min="0" placeholder="Weight" th:value="${item.weight}">
             </div>
             <div class="form-group">
-                <input id="pampersWeight" name="pampersWeight" class="form-control" type="text" placeholder="Pampers Weight" th:value="${item.pampersWeight}">
+                <input id="pampersWeight" name="pampersWeight" class="form-control" type="number" min="0" placeholder="Pampers Weight" th:value="${item.pampersWeight}">
             </div>
             <div class="form-group">
                 <input id="comment" name="comment" class="form-control" type="text" placeholder="Comment" th:value="${item.comment}">

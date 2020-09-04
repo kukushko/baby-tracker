@@ -41,12 +41,14 @@ class RootController {
     val hasVigantol = todayInputs.exists(_.vigantol)
     val canStartFeeding = inputRepository.canStartFeeding
     val lowPampers = doubleSettingRepository.getPampersCount < 10
+    val lowWipes = doubleSettingRepository.getWipeCount < 10
     result.addObject("todayOutput", recentItem.orNull)
     result.addObject("hasVigantol", hasVigantol)
     result.addObject("hasTemperature", recentTemp.isPresent)
     result.addObject("canStartFeeding", canStartFeeding)
     result.addObject("canStopFeeding", !canStartFeeding)
     result.addObject("lowPampers", lowPampers)
+    result.addObject("lowWipes", lowWipes)
     val vigantolMessage = if (hasVigantol) {
       "YES"
     } else {

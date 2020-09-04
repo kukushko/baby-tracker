@@ -6,6 +6,7 @@ import java.util.Optional
 import hlt.name.site.dal.{DALMaxOutput, DoubleSettingRepository, OutputAggregateRepository, OutputRepository}
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.domain.{PageRequest, Sort}
+import org.springframework.format.annotation.DateTimeFormat
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation._
 import org.springframework.web.servlet.ModelAndView
@@ -58,11 +59,14 @@ class OutputController {
     item.pampersWeight = pampersWeight
     outputRepository.save(item)
     doubleSettingsRepository.decrementPampersCount()
+    doubleSettingsRepository.decrementWipeCount(doubleSettingsRepository.getWipesPerOutput)
     "redirect:/outputs/list"
   }
 
   @PostMapping(value = Array("/update"))
   def update(@RequestParam id: Int,
+             @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
+             @RequestParam(required = false) outputTime: LocalDateTime,
              @RequestParam(required = false) hardOutput: Boolean,
              @RequestParam(required = false) softOutput: Boolean,
              @RequestParam(required = false) comment: String,
@@ -75,6 +79,7 @@ class OutputController {
     val item = t.get()
     item.softOutput = softOutput
     item.hardOutput = hardOutput
+    item.outputTime = outputTime
     item.comment = if (comment == null) "" else comment
     item.weight = weight
     item.pampersWeight = pampersWeight

@@ -8,6 +8,9 @@
         <p>Edit output for <span th:text="${#temporals.format(item.outputTime, 'dd-MMM-yyyy HH:mm')}"></p>
         <form id="addOutputForm" cssClass="form-inline" th:action="@{/outputs/update}" method="post">
             <input id="id" name="id" type="hidden" th:value="${item.id}">
+            <div class="form-group">
+                <input id="outputTime" name="outputTime" class="form-control" type="datetime-local" placeholder="Time" th:field="*{item.outputTime}">
+            </div>
             <div class="form-check">
                 <input id="hardOutput" name="hardOutput" type="checkbox" class="form-check-input" th:field="*{item.hardOutput}">
                 <label for="hardOutput" class="form-check-label">Hard Output</label>

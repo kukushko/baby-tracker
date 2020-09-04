@@ -30,6 +30,8 @@ class SettingInitializer {
   def ensureSettingsConfigured(): Unit = {
     ensureSettingExist(DoubleSettingRepository.PAMPERS_WEIGHT_SETTING, DoubleSettingRepository.DEFAULT_PAMPERS_WEIGHT)
     ensureSettingExist(DoubleSettingRepository.PAMPERS_COUNTER_SETTING, DoubleSettingRepository.DEFAULT_PAMPERS_COUNT)
+    ensureSettingExist(DoubleSettingRepository.WIPE_COUNTER_SETTING, DoubleSettingRepository.DEFAULT_WIPE_COUNT)
+    ensureSettingExist(DoubleSettingRepository.WIPES_PER_OUTPUT_SETTING, DoubleSettingRepository.DEFAULT_WIPES_PER_OUTPUT)
   }
 
 }

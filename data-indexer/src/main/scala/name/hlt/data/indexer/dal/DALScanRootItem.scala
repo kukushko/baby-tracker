@@ -12,8 +12,7 @@ class DALScanRootItem {
   @BeanProperty
   var id: Int = _
 
-  @UniqueConstraint(columnNames = Array("root"))
-  @Column(name = "root", length = 1024)
+  @Column(name = "root", length = 1024, unique = true)
   @BeanProperty
   var root: String = _
 

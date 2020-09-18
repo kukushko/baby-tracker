@@ -1,7 +1,7 @@
 package name.hlt.data.indexer
 
 import com.beust.jcommander.JCommander
-import name.hlt.data.indexer.dal.DALScanRootItemRepository
+import name.hlt.data.indexer.dal.{DALScanRootFileInfoRepository, DALScanRootItemRepository}
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration
 import org.springframework.context.ApplicationContext
 import org.springframework.context.annotation.{Bean, Configuration}
@@ -38,6 +38,6 @@ class Config {
   def indexRootCommandParameters: IndexRootCommandParameters = new IndexRootCommandParameters
 
   @Bean(name = Array("index-root"))
-  def indexRootCommand(rootRepository: DALScanRootItemRepository, indexRootCommandParameters: IndexRootCommandParameters): Command =
-    new IndexRootCommand(rootRepository, indexRootCommandParameters)
+  def indexRootCommand(fileInfoRepository: DALScanRootFileInfoRepository, rootRepository: DALScanRootItemRepository, indexRootCommandParameters: IndexRootCommandParameters): Command =
+    new IndexRootCommand(fileInfoRepository, rootRepository, indexRootCommandParameters)
 }

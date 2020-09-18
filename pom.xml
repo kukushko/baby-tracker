@@ -9,6 +9,7 @@
     <version>1.0-SNAPSHOT</version>
     <modules>
         <module>home-site</module>
+        <module>data-indexer</module>
     </modules>
     <packaging>pom</packaging>
 

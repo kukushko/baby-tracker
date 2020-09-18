@@ -43,16 +43,25 @@ class IndexRootCommand(fileInfoRepository: DALScanRootFileInfoRepository, rootRe
     Files.walk(Paths.get(root.root)).filter(x => new File(x.toString).isFile).forEach {
       fp =>
         log.info(s"processing file $counter - $fp")
+        val att = Files.readAttributes(fp, classOf[BasicFileAttributes])
         if (!itemByPath.contains(fp.toString)) {
-          val att = Files.readAttributes(fp, classOf[BasicFileAttributes])
           val item = new DALScanRootFileInfo
-          item.createTime = LocalDateTime.ofInstant(att.creationTime().toInstant, ZoneId.systemDefault())
+          val ct = LocalDateTime.ofInstant(att.creationTime().toInstant, ZoneId.systemDefault())
+          val mt = LocalDateTime.ofInstant(att.lastModifiedTime().toInstant, ZoneId.systemDefault())
+          item.createTime = if (mt.isBefore(ct)) mt else ct
           item.path = fp.toString
           item.size = att.size()
           item.root = root
           item.hash = fileHash(fp.toString)
           fileInfoRepository.save(item)
         }
+        /*else {
+          val ct = LocalDateTime.ofInstant(att.creationTime().toInstant, ZoneId.systemDefault())
+          val mt = LocalDateTime.ofInstant(att.lastModifiedTime().toInstant, ZoneId.systemDefault())
+          val item = itemByPath(fp.toString)
+          item.createTime = if (mt.isBefore(ct)) mt else ct
+          fileInfoRepository.save(item)
+        }*/
 
         counter += 1
     }

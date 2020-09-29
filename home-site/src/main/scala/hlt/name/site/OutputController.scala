@@ -99,7 +99,16 @@ class OutputController {
 
   @PostMapping(value = Array("delete"))
   def delete(@RequestParam id: Int): String = {
-    outputRepository.deleteById(id)
+    val t = outputRepository.findById(id)
+    if (t.isPresent) {
+      val item = t.get()
+      // return wipes back
+      doubleSettingsRepository.decrementWipeCount(-item.wipeCount)
+      // return pampers back
+      doubleSettingsRepository.incrementPampersCount()
+      // save
+      outputRepository.deleteById(id)
+    }
     "redirect:/outputs/list"
   }
 

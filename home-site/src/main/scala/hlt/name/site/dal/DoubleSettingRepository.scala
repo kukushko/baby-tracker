@@ -51,6 +51,10 @@ trait DoubleSettingRepository extends CrudRepository[DALDoubleSetting, Integer] 
     decrement(DoubleSettingRepository.WIPE_COUNTER_SETTING, count)
   }
 
+  def incrementPampersCount(): Unit = {
+    decrement(DoubleSettingRepository.PAMPERS_COUNTER_SETTING, -1)
+  }
+
   def decrementPampersCount(): Unit = {
     decrement(DoubleSettingRepository.PAMPERS_COUNTER_SETTING, 1)
   }

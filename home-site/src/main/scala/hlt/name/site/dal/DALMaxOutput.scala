@@ -39,4 +39,8 @@ class DALMaxOutput {
   @Column(nullable = true, length = 255)
   @BeanProperty
   var comment: String = _
+
+  @Column(nullable = false)
+  @BeanProperty
+  var wipeCount: Int = _
 }

@@ -15,6 +15,7 @@
             <th>Soft</th>
             <th>Weight</th>
             <th>Pampers Weight</th>
+            <th>Wipes</th>
             <th>Comment</th>
         </tr>
 
@@ -26,6 +27,7 @@
             <td><span th:if="${item.softOutput}" class="glyphicon glyphicon-ok"></td>
             <td th:text="${item.weight}"></td>
             <td th:text="${item.pampersWeight}"></td>
+            <td th:text="${item.wipeCount}"></td>
             <td th:text="${item.comment}"></td>
         </tr>
 

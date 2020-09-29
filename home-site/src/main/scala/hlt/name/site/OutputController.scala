@@ -28,7 +28,11 @@ class OutputController {
   private var doubleSettingsRepository: DoubleSettingRepository = _
 
   @GetMapping(value = Array("/addForm"))
-  def addForm(): String = "outputs/addForm"
+  def addForm(): ModelAndView = {
+    val result = new ModelAndView("outputs/addForm")
+    result.addObject("defaultWipeCount", doubleSettingsRepository.getWipesPerOutput.toInt)
+    result
+  }
 
   @GetMapping(value = Array("/editForm/{id}"))
   def editForm(@PathVariable id: Int): ModelAndView =  {
@@ -48,6 +52,7 @@ class OutputController {
   def add(@RequestParam(required = false) hardOutput: Boolean,
           @RequestParam(required = false) softOutput: Boolean,
           @RequestParam(required = false) comment: String,
+          @RequestParam(required = false) wipeCount: Int,
           @RequestParam(required = false) totalWeight: Double): String = {
     val pampersWeight = doubleSettingsRepository.getPampersWeight
     val item = new DALMaxOutput
@@ -57,9 +62,10 @@ class OutputController {
     item.comment = if (comment == null) "" else comment
     item.weight = totalWeight - pampersWeight
     item.pampersWeight = pampersWeight
+    item.wipeCount = wipeCount
     outputRepository.save(item)
     doubleSettingsRepository.decrementPampersCount()
-    doubleSettingsRepository.decrementWipeCount(doubleSettingsRepository.getWipesPerOutput)
+    doubleSettingsRepository.decrementWipeCount(wipeCount)
     "redirect:/outputs/list"
   }
 
@@ -71,6 +77,7 @@ class OutputController {
              @RequestParam(required = false) softOutput: Boolean,
              @RequestParam(required = false) comment: String,
              @RequestParam(required = false) weight: Double,
+             @RequestParam(required = false) wipeCount: Int,
              @RequestParam(required = false) pampersWeight: Double): String = {
     val t = outputRepository.findById(id)
     if (!t.isPresent) {
@@ -82,8 +89,11 @@ class OutputController {
     item.outputTime = outputTime
     item.comment = if (comment == null) "" else comment
     item.weight = weight
+    val wipeDelta = wipeCount-item.wipeCount
+    item.wipeCount = wipeCount
     item.pampersWeight = pampersWeight
     outputRepository.save(item)
+    doubleSettingsRepository.decrementWipeCount(wipeDelta)
     "redirect:/outputs/list"
   }
 

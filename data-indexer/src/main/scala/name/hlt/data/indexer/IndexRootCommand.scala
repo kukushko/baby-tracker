@@ -16,7 +16,6 @@ class IndexRootCommand(fileInfoRepository: DALScanRootFileInfoRepository, rootRe
   private val log = LoggerFactory.getLogger(getClass)
 
   private def fileHash(p: String): String = {
-    import sun.misc.BASE64Encoder
     import java.io.BufferedInputStream
     import java.io.FileInputStream
     import java.security.MessageDigest

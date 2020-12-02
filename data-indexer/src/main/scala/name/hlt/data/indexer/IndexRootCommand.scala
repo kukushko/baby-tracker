@@ -88,7 +88,5 @@ class IndexRootCommand(fileInfoRepository: DALScanRootFileInfoRepository, rootRe
     log.info(s"Root entry ID: ${root.id}")
 
     fillIndex(root)
-    //println("*************")
-    //println(fileInfoRepository.findById(6848).get().path)
   }
 }

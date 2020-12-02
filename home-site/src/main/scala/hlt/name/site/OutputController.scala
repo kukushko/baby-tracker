@@ -16,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView
 class OutputController {
 
   private val PAGE_SIZE = 10
+  private val OUTPUT_LIST_REDIRECT = "redirect:/outputs/list"
   private val log = org.slf4j.LoggerFactory.getLogger(getClass)
 
   @Autowired
@@ -66,7 +67,7 @@ class OutputController {
     outputRepository.save(item)
     doubleSettingsRepository.decrementPampersCount()
     doubleSettingsRepository.decrementWipeCount(wipeCount)
-    "redirect:/outputs/list"
+    OUTPUT_LIST_REDIRECT
   }
 
   @PostMapping(value = Array("/update"))
@@ -94,7 +95,7 @@ class OutputController {
     item.pampersWeight = pampersWeight
     outputRepository.save(item)
     doubleSettingsRepository.decrementWipeCount(wipeDelta)
-    "redirect:/outputs/list"
+    OUTPUT_LIST_REDIRECT
   }
 
   @PostMapping(value = Array("delete"))
@@ -109,7 +110,8 @@ class OutputController {
       // save
       outputRepository.deleteById(id)
     }
-    "redirect:/outputs/list"
+
+    OUTPUT_LIST_REDIRECT
   }
 
   @GetMapping(value = Array("/dailyStats"))
@@ -123,12 +125,6 @@ class OutputController {
   @GetMapping(value = Array("/list"))
   def index(@RequestParam(required = false) page: Integer): ModelAndView = {
     val result = new ModelAndView("outputs/list")
-
-//    val testItem = new DALMaxOutput
-//    testItem.outputTime = LocalDateTime.now()
-//    testItem.softOutput = true
-//    testItem.comment = "test item"
-//    outputRepository.save(testItem)
 
     val pageReq = PageRequest.of(page, PAGE_SIZE)
     val outputs = outputRepository.findByOrderByOutputTimeDesc(pageReq)

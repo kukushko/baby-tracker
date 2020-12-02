@@ -16,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView
 class TemperatureController {
 
   private val PAGE_SIZE = 10
+  private val TEMP_LIST_REDIRECT = "redirect:/temp/list"
 
   @Autowired
   private var temperatureRepository: TemperatureRepository = _
@@ -42,7 +43,7 @@ class TemperatureController {
     item.temperature = temperature
     item.comment = comment
     temperatureRepository.save(item)
-    "redirect:/temp/list"
+    TEMP_LIST_REDIRECT
   }
 
   @PostMapping(value = Array("/update"))
@@ -63,24 +64,18 @@ class TemperatureController {
     item.temperature = temperature
     item.comment = comment
     temperatureRepository.save(item)
-    "redirect:/temp/list"
+    TEMP_LIST_REDIRECT
   }
 
   @PostMapping(value = Array("delete"))
   def delete(@RequestParam id: Int): String = {
     temperatureRepository.deleteById(id)
-    "redirect:/temp/list"
+    TEMP_LIST_REDIRECT
   }
 
   @GetMapping(value = Array("/list"))
   def index(@RequestParam(required = false) page: Integer): ModelAndView = {
     val result = new ModelAndView("temp/list")
-
-    //    val testItem = new DALMaxOutput
-    //    testItem.outputTime = LocalDateTime.now()
-    //    testItem.softOutput = true
-    //    testItem.comment = "test item"
-    //    outputRepository.save(testItem)
 
     val pageReq = PageRequest.of(page, PAGE_SIZE)
     val temps = temperatureRepository.findByOrderByTemperatureTimeDesc(pageReq)

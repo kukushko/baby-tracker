@@ -17,6 +17,7 @@ import org.springframework.web.servlet.ModelAndView
 class InputController {
 
   private val PAGE_SIZE = 10
+  private val INPUT_LIST_REDIRECT = "redirect:/inputs/list"
 
   @Autowired
   private var inputRepository: InputRepository = _
@@ -30,13 +31,13 @@ class InputController {
     val item = new DALInput
     item.startTime = LocalDateTime.now()
     inputRepository.save(item)
-    "redirect:/inputs/list"
+    INPUT_LIST_REDIRECT
   }
 
   @PostMapping(value = Array("/delete"))
   def delete(@RequestParam id: Int): String = {
     inputRepository.deleteById(id)
-    "redirect:/inputs/list"
+    INPUT_LIST_REDIRECT
   }
 
   @GetMapping(value = Array("/editForm/{id}"))
@@ -69,7 +70,7 @@ class InputController {
     x.vigantol = vigantol
     inputRepository.save(x)
 
-    "redirect:/inputs/list"
+    INPUT_LIST_REDIRECT
   }
 
   @GetMapping(value = Array("/stop"))
@@ -84,7 +85,8 @@ class InputController {
           inputRepository.save(x)
         }
     }
-    "redirect:/inputs/list"
+
+    INPUT_LIST_REDIRECT
   }
 
   @GetMapping(value = Array("/list"))

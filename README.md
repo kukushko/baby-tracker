@@ -5,6 +5,7 @@ Baby maintenance tool (website).
 Prerequisites - MySQL database. Provide connection details in application.properties. Schema and defaults will be created automatically.
 
 Tool features:
+
 1. Tracking of "baby inputs" - feeding. Mom presses "Start" and "Stop" to track this. If feeding time exceeds 60 minutes, system will automatically 
    assume feeding has been completed and will stop it for you.
 2. Tracking of "vigantol" supply on daily basis. If baby did not get vigantol warning message is displayed on the main page.
